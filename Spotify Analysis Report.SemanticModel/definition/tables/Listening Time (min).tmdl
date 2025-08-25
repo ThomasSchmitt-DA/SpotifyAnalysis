@@ -1,0 +1,26 @@
+table 'Listening Time (min)'
+	lineageTag: 4ecf3167-1aba-45b9-a94b-a95d06d63e7a
+
+	measure 'Valeur Listening Time (min)' = SELECTEDVALUE('Listening Time (min)'[Listening Time (min)])
+		formatString: 0
+		lineageTag: 5e37f2c0-9c7e-47c9-963e-39468a16a060
+
+	column 'Listening Time (min)'
+		formatString: 0
+		lineageTag: a38812da-88a6-4a3b-b667-c67e256a1e66
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'Listening Time (min)' = calculated
+		mode: import
+		source = GENERATESERIES(0, 25, 1)
+
+	annotation PBI_Id = a7cb34edbcdd4c58ab55ffd2b220fcaf
+

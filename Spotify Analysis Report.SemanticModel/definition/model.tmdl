@@ -1,0 +1,26 @@
+model Model
+	culture: fr-FR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: fr-FR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["spotify_history"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.146.1026.0 (25.08)+fb98ab832373de81dccd5c01cd96306a48477556
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table spotify_history
+ref table DateTableTemplate_7964d510-e70a-464a-920d-2fc620b95f6f
+ref table LocalDateTable_5ada7c71-2359-493c-b3d2-e8ec2e0d8915
+ref table 'Date Table'
+ref table LocalDateTable_ddad2aa0-a156-452d-98dd-5afdc65435eb
+ref table 'Listening Time (min)'
+ref table 'Track Frequency (Parameter)'
+
+ref cultureInfo fr-FR
+

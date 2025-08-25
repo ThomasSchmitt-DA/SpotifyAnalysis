@@ -1,0 +1,59 @@
+table 'Date Table'
+	lineageTag: a476c519-0573-480a-b6f1-4bd7e55d7cc8
+
+	column Date
+		formatString: Short Date
+		lineageTag: 95959c37-fd80-4816-8ac8-041763f1b81a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 2bd9e730-6679-48c4-9e1e-1e67a44b5408
+			defaultHierarchy: LocalDateTable_ddad2aa0-a156-452d-98dd-5afdc65435eb.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year = YEAR('Date Table'[Date])
+		formatString: 0
+		lineageTag: 596f6486-6712-4738-b629-b0c8f781d605
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Name' = FORMAT('Date Table'[Date], "DDD")
+		lineageTag: f6b52c6f-d7c2-4119-bf87-086f70b48b66
+		summarizeBy: none
+		sortByColumn: 'Day Number in Week'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weekday_Weekend = IF(WEEKDAY('Date Table'[Date], 2)<=5, "Weekday", "Weekend")
+		lineageTag: 0bd11356-cf7d-4069-ab5a-d77c7c6cc746
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Number in Week' = WEEKDAY('Date Table'[Date],2)
+		formatString: 0
+		lineageTag: ac7d4978-9968-4b45-8b06-cdbb9c0588d5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Number' = DAY('Date Table'[Date])
+		formatString: 0
+		lineageTag: acf2e3e0-4a91-4bf0-b5fb-9c6a77077a75
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Date Table' = calculated
+		mode: import
+		source = CALENDAR(MIN(spotify_history[Track Played Date]),MAX(spotify_history[Track Played Date]))
+
+	annotation PBI_Id = 552ba6b18f3f47dab5fda53ac7929c72
+

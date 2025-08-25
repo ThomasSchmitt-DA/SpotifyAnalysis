@@ -1,0 +1,74 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "spotify_history",
+          "nodeLineageTag": "5deaa1f6-8eab-477b-9ad7-7aae0320847e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 395,
+            "y": 0
+          },
+          "nodeIndex": "Date Table",
+          "nodeLineageTag": "a476c519-0573-480a-b6f1-4bd7e55d7cc8",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 679,
+            "y": 38
+          },
+          "nodeIndex": "Listening Time (min)",
+          "nodeLineageTag": "4ecf3167-1aba-45b9-a94b-a95d06d63e7a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 963,
+            "y": 38
+          },
+          "nodeIndex": "Track Frequency (Parameter)",
+          "nodeLineageTag": "19b6badd-81a3-483d-9a27-4c3e6b9f14c2",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Toutes les tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Toutes les tables",
+  "defaultDiagram": "Toutes les tables"
+}

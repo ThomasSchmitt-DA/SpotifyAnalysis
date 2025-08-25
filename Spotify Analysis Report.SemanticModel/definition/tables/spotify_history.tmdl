@@ -1,0 +1,356 @@
+table spotify_history
+	lineageTag: 5deaa1f6-8eab-477b-9ad7-7aae0320847e
+
+	measure 'No of Albums' = DISTINCTCOUNT(spotify_history[album_name])
+		formatString: 0
+		lineageTag: a0a9e4be-2934-46b2-8368-b29d2c450b93
+
+	measure 'MinMax Albums Line Chart' =
+			
+			
+			VAR _MaxValue = MAXX(ALLSELECTED('Date Table'[year]), CALCULATE(DISTINCTCOUNT(spotify_history[album_name])))
+			
+			VAR _MinValue = MINX(ALLSELECTED('Date Table'[year]), CALCULATE(DISTINCTCOUNT(spotify_history[album_name])))
+			
+			VAR _CurrentValue = DISTINCTCOUNT(spotify_history[album_name])
+			
+			RETURN
+			
+			    IF(_CurrentValue = _MaxValue || _CurrentValue = _MinValue, _CurrentValue, BLANK())
+		formatString: 0
+		lineageTag: 8dd47e2d-e83f-4da5-b26f-bd30c35150e1
+
+	measure CurrentYearAlbums =
+			
+			
+			VAR _CurrentYear = MAX('Date Table'[year])
+			
+			RETURN
+			
+			CALCULATE(DISTINCTCOUNT(spotify_history[album_name]), 'Date Table'[year] = _CurrentYear)
+		formatString: 0
+		lineageTag: 472aa635-3fd2-4980-9514-063819b080f4
+
+	measure PreviousYearsAlbums =
+			
+			
+			VAR _LatestYear = MAX('Date Table'[year])
+			
+			VAR _PreviousYear = _LatestYear -1
+			
+			RETURN
+			
+			CALCULATE(DISTINCTCOUNT(spotify_history[album_name]),'Date Table'[year] = _PreviousYear)
+		formatString: 0
+		lineageTag: 9d98a735-5545-4120-b27e-124105fa276f
+
+	measure 'PY and YoY Albums KPI' = ```
+			
+			
+			VAR _latest = [CurrentYearAlbums]
+			VAR _previous = [PreviousYearsAlbums]
+			
+			VAR _YoY = IF(NOT(ISBLANK(_previous)), DIVIDE(_latest - _previous, _previous, 0), BLANK())
+			
+			RETURN
+			
+			IF(NOT(ISBLANK(_previous)),
+			    "vs PY: " & FORMAT(_previous, "#,##0") & 
+			    " (" & FORMAT(_YoY, "0,00%") & ")",
+			    "No Data")
+			```
+		lineageTag: 2631a8ed-d663-47c3-b460-4b350313987e
+
+	measure 'Max Year' = MAX('Date Table'[year])
+		formatString: 0
+		lineageTag: 2722f661-8d36-4ee4-b807-ac8a8b807eda
+
+	measure 'No of Artists' = DISTINCTCOUNT(spotify_history[artist_name])
+		formatString: 0
+		lineageTag: 16ff14c6-bd1e-4b73-ac82-dc78a4da1b19
+
+	measure 'MinMax Artists Line Chart' =
+			
+			
+			VAR _MaxValue = MAXX(ALLSELECTED('Date Table'[year]), CALCULATE(DISTINCTCOUNT(spotify_history[artist_name])))
+			
+			VAR _MinValue = MINX(ALLSELECTED('Date Table'[year]), CALCULATE(DISTINCTCOUNT(spotify_history[artist_name])))
+			
+			VAR _CurrentValue = DISTINCTCOUNT(spotify_history[artist_name])
+			
+			RETURN
+			
+			    IF(_CurrentValue = _MaxValue || _CurrentValue = _MinValue, _CurrentValue, BLANK())
+		formatString: 0
+		lineageTag: f3ffd338-3e10-4755-a869-d6aaedbdde53
+
+	measure CurrentYearArtists =
+			
+			
+			VAR _CurrentYear = MAX('Date Table'[year])
+			
+			RETURN
+			
+			CALCULATE(DISTINCTCOUNT(spotify_history[artist_name]), 'Date Table'[year] = _CurrentYear)
+		formatString: 0
+		lineageTag: 03a1f815-635e-412d-bbae-2626c7d67cb4
+
+	measure PreviousYearsArtists =
+			
+			
+			VAR _LatestYear = MAX('Date Table'[year])
+			
+			VAR _PreviousYear = _LatestYear -1
+			
+			RETURN
+			
+			CALCULATE(DISTINCTCOUNT(spotify_history[artist_name]),'Date Table'[year] = _PreviousYear)
+		formatString: 0
+		lineageTag: a34ad559-6de7-4a6d-b118-b0e6a69c65d6
+
+	measure 'PY and YoY Artists KPI' = ```
+			
+			
+			VAR _latest = [CurrentYearArtists]
+			VAR _previous = [PreviousYearsArtists]
+			
+			VAR _YoY = IF(NOT(ISBLANK(_previous)), DIVIDE(_latest - _previous, _previous, 0), BLANK())
+			
+			RETURN
+			
+			IF(NOT(ISBLANK(_previous)),
+			    "vs PY: " & FORMAT(_previous, "#,##0") & 
+			    " (" & FORMAT(_YoY, "0,00%") & ")",
+			    "No Data")
+			```
+		lineageTag: 59a59404-d3c7-45d6-8b85-ce0416daae01
+
+	measure 'No of Tracks' = DISTINCTCOUNT(spotify_history[track_name])
+		formatString: 0
+		lineageTag: 79936f52-9f67-4f77-990a-42900ee8b5ce
+
+	measure CurrentYearTracks =
+			
+			
+			VAR _CurrentYear = MAX('Date Table'[year])
+			
+			RETURN
+			
+			CALCULATE(DISTINCTCOUNT(spotify_history[track_name]), 'Date Table'[year] = _CurrentYear)
+		formatString: 0
+		lineageTag: ce3dbbed-6f0f-437b-af03-5ffe7c8f4c17
+
+	measure 'MinMax Tracks Line Chart' =
+			
+			
+			VAR _MaxValue = MAXX(ALLSELECTED('Date Table'[year]), CALCULATE(DISTINCTCOUNT(spotify_history[track_name])))
+			
+			VAR _MinValue = MINX(ALLSELECTED('Date Table'[year]), CALCULATE(DISTINCTCOUNT(spotify_history[track_name])))
+			
+			VAR _CurrentValue = DISTINCTCOUNT(spotify_history[track_name])
+			
+			RETURN
+			
+			    IF(_CurrentValue = _MaxValue || _CurrentValue = _MinValue, _CurrentValue, BLANK())
+		formatString: 0
+		lineageTag: 885f7dbb-e32e-4e90-a0fc-7e66e85f511c
+
+	measure PreviousYearsTracks =
+			
+			
+			VAR _LatestYear = MAX('Date Table'[year])
+			
+			VAR _PreviousYear = _LatestYear -1
+			
+			RETURN
+			
+			CALCULATE(DISTINCTCOUNT(spotify_history[track_name]),'Date Table'[year] = _PreviousYear)
+		formatString: 0
+		lineageTag: c88d1c55-46be-4d6f-bd3d-f716ef04c0b9
+
+	measure 'PY and YoY Tracks KPI' = ```
+			
+			
+			VAR _latest = [CurrentYearArtists]
+			VAR _previous = [PreviousYearsArtists]
+			
+			VAR _YoY = IF(NOT(ISBLANK(_previous)), DIVIDE(_latest - _previous, _previous, 0), BLANK())
+			
+			RETURN
+			
+			IF(NOT(ISBLANK(_previous)),
+			    "vs PY: " & FORMAT(_previous, "#,##0") & 
+			    " (" & FORMAT(_YoY, "0,00%") & ")",
+			    "No Data")
+			```
+		lineageTag: be1918f7-4a1f-4f1b-b673-5fb10c9a9fe1
+
+	measure 'Avg Listening Time (min)' = AVERAGE(spotify_history[ms_played]) / 60000
+		lineageTag: af18d10c-bfce-4a4c-9975-4c8532a38ba2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Track Frequency' = COUNTROWS(spotify_history)
+		formatString: 0
+		lineageTag: 61bea5d4-b239-4abb-bdd0-67b2f071b562
+
+	measure 'CF Quadrant' = ```
+			
+			VAR AvgTime = [Avg Listening Time (min)] <= 'Listening Time (min)'[Valeur Listening Time (min)]
+			VAR TrackFreq = [Track Frequency] >= 'Track Frequency (Parameter)'[Valeur Track Frequency (Parameter)]
+			
+			VAR RESULT = 
+			    SWITCH(
+			        TRUE(),
+			        AvgTime && TrackFreq, 1, --LowTime & High Freq
+			        NOT AvgTime && TrackFreq, 2,  --HighTime & High Freq
+			        NOT AvgTime && NOT TrackFreq, 3, --High Time & Low Freq
+			        AvgTime && NOT TrackFreq, 4
+			    )
+			
+			    RETURN RESULT
+			```
+		formatString: 0
+		lineageTag: 0e2593f7-f2c6-4a69-9892-4766f79b0a39
+
+	column spotify_track_uri
+		dataType: string
+		lineageTag: cf520f31-c244-4d86-8fab-264c3e86de36
+		summarizeBy: none
+		sourceColumn: spotify_track_uri
+
+		annotation SummarizationSetBy = Automatic
+
+	column ts
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 59996568-1167-4bb8-af2c-52df2a386946
+		summarizeBy: none
+		sourceColumn: ts
+
+		variation Variation
+			isDefault
+			relationship: 3226bf8a-f352-418f-ab38-8f8f2db25f9d
+			defaultHierarchy: LocalDateTable_5ada7c71-2359-493c-b3d2-e8ec2e0d8915.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+	column platform
+		dataType: string
+		lineageTag: a0c3f28e-f52e-49e6-a849-cfb68e88c671
+		summarizeBy: none
+		sourceColumn: platform
+
+		annotation SummarizationSetBy = Automatic
+
+	column ms_played
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e2111eb-02b6-45b3-bac9-0b6f0490dcbb
+		summarizeBy: sum
+		sourceColumn: ms_played
+
+		annotation SummarizationSetBy = Automatic
+
+	column track_name
+		dataType: string
+		lineageTag: b77eb127-ccb2-416d-9ddf-2892c6e25508
+		summarizeBy: none
+		sourceColumn: track_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column artist_name
+		dataType: string
+		lineageTag: 8333dbc9-e075-4ea4-9ba0-ebe96c83dda2
+		summarizeBy: none
+		sourceColumn: artist_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column album_name
+		dataType: string
+		lineageTag: 9296fe1e-2be2-4a09-aabe-615c3cc05a29
+		summarizeBy: none
+		sourceColumn: album_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column reason_start
+		dataType: string
+		lineageTag: a018d16c-a0d9-4304-b67b-4cdd7d841ad5
+		summarizeBy: none
+		sourceColumn: reason_start
+
+		annotation SummarizationSetBy = Automatic
+
+	column reason_end
+		dataType: string
+		lineageTag: 8b30867a-3522-4b78-ac17-ab8a63c01e09
+		summarizeBy: none
+		sourceColumn: reason_end
+
+		annotation SummarizationSetBy = Automatic
+
+	column shuffle
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d3fc072e-803b-47f2-a9ea-dfd64bb3848f
+		summarizeBy: none
+		sourceColumn: shuffle
+
+		annotation SummarizationSetBy = Automatic
+
+	column skipped
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 27796fee-2e7f-4da7-831c-15f1a7cb6f21
+		summarizeBy: none
+		sourceColumn: skipped
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Track Played Date' = DATE(YEAR(spotify_history[ts]), MONTH(spotify_history[ts]), DAY(spotify_history[ts]))
+		formatString: Short Date
+		lineageTag: 207795a8-7248-422e-b595-743e7f1885ca
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Track Played Time' = FORMAT(spotify_history[ts], "HH:MM:SS")
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 3bb8e05c-ffb7-4a1a-8590-87601e9b7733
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column Hour = HOUR(spotify_history[Track Played Time])
+		formatString: 0
+		lineageTag: 0a9e17dd-8ab9-4e21-93d7-3750a9ba0b38
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition spotify_history = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\SESA758272\Documents\GitHub\SpotifyAnalysis\Spotify Data\spotify_history.csv"),[Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"En-têtes promus" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"spotify_track_uri", type text}, {"ts", type datetime}, {"platform", type text}, {"ms_played", Int64.Type}, {"track_name", type text}, {"artist_name", type text}, {"album_name", type text}, {"reason_start", type text}, {"reason_end", type text}, {"shuffle", type logical}, {"skipped", type logical}})
+				in
+				    #"Type modifié"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

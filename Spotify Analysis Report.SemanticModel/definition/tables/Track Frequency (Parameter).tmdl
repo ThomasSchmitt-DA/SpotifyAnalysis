@@ -1,0 +1,26 @@
+table 'Track Frequency (Parameter)'
+	lineageTag: 19b6badd-81a3-483d-9a27-4c3e6b9f14c2
+
+	measure 'Valeur Track Frequency (Parameter)' = SELECTEDVALUE('Track Frequency (Parameter)'[Track Frequency (Parameter)])
+		formatString: 0
+		lineageTag: 61e2da5f-d647-4b92-9e27-2e5f1d27d4b2
+
+	column 'Track Frequency (Parameter)'
+		formatString: 0
+		lineageTag: 8061e696-a8ad-4fd0-8ddd-75aadc8fb372
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'Track Frequency (Parameter)' = calculated
+		mode: import
+		source = GENERATESERIES(0, 200, 1)
+
+	annotation PBI_Id = a67cdf5a6d604945aad295f946ebb42f
+

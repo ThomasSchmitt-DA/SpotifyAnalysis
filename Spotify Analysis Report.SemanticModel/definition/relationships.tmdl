@@ -1,0 +1,14 @@
+relationship 3226bf8a-f352-418f-ab38-8f8f2db25f9d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: spotify_history.ts
+	toColumn: LocalDateTable_5ada7c71-2359-493c-b3d2-e8ec2e0d8915.Date
+
+relationship 2bd9e730-6679-48c4-9e1e-1e67a44b5408
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Date Table'.Date
+	toColumn: LocalDateTable_ddad2aa0-a156-452d-98dd-5afdc65435eb.Date
+
+relationship d918724d-25a8-af14-d3f7-4751cf4aa6ad
+	fromColumn: spotify_history.'Track Played Date'
+	toColumn: 'Date Table'.Date
+
